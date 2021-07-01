@@ -1,13 +1,21 @@
-
-const arr = ["p", "button", "li"];
+const arr = ["p", "button", "button"];
 const text = ["Hey this is Anirudh Singh Tomar", "Click to Know me", "By"];
-
-let observer;
+function addtagss(){
+  let observer;
         
-        document.addEventListener('DOMContentLoaded', init);
+  if(typeof MutationObserver !== "undefined"){
+      observer = new MutationObserver(mutated);
+      let config = {
+                
+          childList: true, 
         
-        function init(){
-            for (let i = 0; i < arr.length; i++) {
+      };
+     observer.observe(document.body, config);
+  }else{
+     document.addEventListener('DOMContentLoaded', init);
+  }       
+       
+  for (let i = 0; i < arr.length; i++) {
    
                 var node = document.createElement(arr[i]);
                 var textnode = document.createTextNode(text[i]); 
@@ -15,30 +23,22 @@ let observer;
                 var element = document.getElementById("body");
                 element.appendChild(node);
             }
-            
-            let config = {
+ }          
                 
-                childList: true, 
-                
-            };
         
-            
-            observer = new MutationObserver(mutated);
-            observer.observe(document.body, config);
-        }
-        
-        
-        
+function inti(e){
+               console.log("Added a new node",e.target.tagName)
+}
        
         
         
-        function mutated(mutationList){
-            console.log( mutationList );
-            for(let mutation of mutationList) {
-                if (mutation.type == 'childList') {
-                    console.log('Added a new node');
-                }
+function mutated(mutationList){
+               console.log( mutationList );
+               for(let mutation of mutationList) {
+                  if (mutation.type == 'childList') {
+                     console.log('Added a new node');
+                  }
                 
-            }
-        }
-
+                }
+}
+        
